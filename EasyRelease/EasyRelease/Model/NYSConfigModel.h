@@ -10,11 +10,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface NYSReplaceModel : NSObject
+@property (nonatomic, copy) NSString *Type;
+@property (nonatomic, copy) NSString *OldPrefix;
+@property (nonatomic, copy) NSString *NewPrefix;
+@property (nonatomic) BOOL enable;
+@end
+
+@interface NYSIgnoreModel : NSObject
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic) BOOL enable;
+@end
+
 @interface NYSConfigModel : NSObject
 @property (nonatomic, strong) NSURL *projectFileDirUrl;
 @property (nonatomic, strong) NSURL *projectDirUrl;
-@property (nonatomic, strong) NSMutableArray<NSDictionary *> *replaceArray;
-@property (nonatomic, strong) NSMutableArray<NSDictionary *> *ignoreArray;
+@property (nonatomic, strong) NSMutableArray<NYSReplaceModel *> *replaceArray;
+@property (nonatomic, strong) NSMutableArray<NYSIgnoreModel *> *ignoreArray;
 @property (nonatomic, strong) NSString *projectOldName;
 @property (nonatomic, strong) NSString *projectNewName;
 @property (nonatomic, assign) BOOL isDelAnnotation;

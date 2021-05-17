@@ -31,7 +31,10 @@ NSTableViewDataSource
     [super viewDidLoad];
     self.projectFileDirectory.editable = NO;
     self.projectDirectory.editable = NO;
-    NConfig.ignoreArray = [NSMutableArray arrayWithArray:@[@{@"name": @"Pods", @"enable": @(true)}]];
+    NYSIgnoreModel *obj = [NYSIgnoreModel new];
+    obj.name = @"Pods";
+    obj.enable = YES;
+    NConfig.ignoreArray = [NSMutableArray arrayWithArray:@[obj]];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.allowsMultipleSelection = NO;
@@ -88,8 +91,10 @@ NSTableViewDataSource
         self.pfdPathCell.stringValue = pathStr;
         NSLog(@"忽略该文件夹下的文件：%@", pathStr);
         NSArray *pathArr = [pathStr componentsSeparatedByString:@"/"];
-        NSDictionary *dic = @{@"name": [pathArr lastObject], @"enable": @(true)};
-        [NConfig.ignoreArray addObject:dic];
+        NYSIgnoreModel *obj = [NYSIgnoreModel new];
+        obj.name = [pathArr lastObject];
+        obj.enable = YES;
+        [NConfig.ignoreArray addObject:obj];
         [self.tableView reloadData];
     }
 }
@@ -116,13 +121,13 @@ NSTableViewDataSource
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    NSDictionary *rowInfoDic = NConfig.ignoreArray[row];
+    NYSIgnoreModel *rowInfo = NConfig.ignoreArray[row];
     NSString *key = tableColumn.identifier;
     
     NSView *contentView = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
     
     if ([key isEqualToString:@"Directory"]) {
-        NSString *name = rowInfoDic[@"name"];
+        NSString *name = rowInfo.name;
         NSTextField *textField = [contentView subviews][0];
         textField.stringValue = name;
         NSImageView *iconImageView = [contentView subviews][1];

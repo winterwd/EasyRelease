@@ -67,9 +67,9 @@ static void easyReleaseDono() {
     // 1.删除多余的空格和注释
     if (NConfig.isDelAnnotation) {
         NSMutableArray<NSString *> *ignoreDirNames = [NSMutableArray array];
-        for (NSDictionary *item in NConfig.ignoreArray) {
-            if ([item[@"enable"] isEqualToString:@"1"]) {
-                [ignoreDirNames addObject:item[@"name"]];
+        for (NYSIgnoreModel *item in NConfig.ignoreArray) {
+            if (item.enable) {
+                [ignoreDirNames addObject:item.name];
             }
         }
         
@@ -93,15 +93,15 @@ static void easyReleaseDono() {
     if (NConfig.replaceArray.count > 0) {
         
         NSMutableArray<NSString *> *ignoreDirNames = [NSMutableArray array];
-        for (NSDictionary *item in NConfig.ignoreArray) {
-            [ignoreDirNames addObject:item[@"name"]];
+        for (NYSIgnoreModel *item in NConfig.ignoreArray) {
+            [ignoreDirNames addObject:item.name];
         }
         
         NPostNotification(@"Replace prefix substitution...");
-        for (NSDictionary *item in NConfig.replaceArray) {
-            if ([item[@"Type"] isEqualToString:@"global"] && [item[@"Enable"] isEqualToString:@"1"]) {
-                NSString *oldMethodNamePrefix = item[@"OldPrefix"];
-                NSString *newMethodNamePrefix = item[@"NewPrefix"];
+        for (NYSReplaceModel *item in NConfig.replaceArray) {
+            if ([item.Type isEqualToString:@"global"] && item.enable) {
+                NSString *oldMethodNamePrefix = item.OldPrefix;
+                NSString *newMethodNamePrefix = item.NewPrefix;
                 if ([NYSUtils blankString:oldMethodNamePrefix] || [NYSUtils blankString:newMethodNamePrefix]) {
                     NPostNotification(@"Modifying the method name prefix, Parameters are missing! \n");
                 }
@@ -119,10 +119,10 @@ static void easyReleaseDono() {
             }
         }
         
-        for (NSDictionary *item in NConfig.replaceArray) {
-            if ([item[@"Type"] isEqualToString:@"method"] && [item[@"Enable"] isEqualToString:@"1"]) {
-                NSString *oldMethodNamePrefix = item[@"OldPrefix"];
-                NSString *newMethodNamePrefix = item[@"NewPrefix"];
+        for (NYSReplaceModel *item in NConfig.replaceArray) {
+            if ([item.Type isEqualToString:@"method"] && item.enable) {
+                NSString *oldMethodNamePrefix = item.OldPrefix;
+                NSString *newMethodNamePrefix = item.NewPrefix;
                 if ([NYSUtils blankString:oldMethodNamePrefix] || [NYSUtils blankString:newMethodNamePrefix]) {
                     NPostNotification(@"Modifying the method name prefix, Parameters are missing! \n");
                 }
@@ -141,10 +141,10 @@ static void easyReleaseDono() {
             }
         }
         
-        for (NSDictionary *item in NConfig.replaceArray) {
-            if ([item[@"Type"] isEqualToString:@"method"] && [item[@"Enable"] isEqualToString:@"1"]) {
-                NSString *oldMethodNamePrefix = item[@"OldPrefix"];
-                NSString *newMethodNamePrefix = item[@"NewPrefix"];
+        for (NYSReplaceModel *item in NConfig.replaceArray) {
+            if ([item.Type isEqualToString:@"method"] && item.enable) {
+                NSString *oldMethodNamePrefix = item.OldPrefix;
+                NSString *newMethodNamePrefix = item.NewPrefix;
                 if ([NYSUtils blankString:oldMethodNamePrefix] || [NYSUtils blankString:newMethodNamePrefix]) {
                     NPostNotification(@"Modifying the method name prefix, Parameters are missing! \n");
                 }
@@ -163,10 +163,10 @@ static void easyReleaseDono() {
             }
         }
         
-        for (NSDictionary *item in NConfig.replaceArray) {
-            if ([item[@"Type"] isEqualToString:@"class"] && [item[@"Enable"] isEqualToString:@"1"]) {
-                NSString *oldClassNamePrefix = item[@"OldPrefix"];
-                NSString *newClassNamePrefix = item[@"NewPrefix"];
+        for (NYSReplaceModel *item in NConfig.replaceArray) {
+            if ([item.Type isEqualToString:@"class"] && item.enable) {
+                NSString *oldClassNamePrefix = item.OldPrefix;
+                NSString *newClassNamePrefix = item.NewPrefix;
                 if ([NYSUtils blankString:oldClassNamePrefix] || [NYSUtils blankString:newClassNamePrefix]) {
                     NPostNotification(@"Replacing the class name prefix, Parameters are missing! \n");
                 }

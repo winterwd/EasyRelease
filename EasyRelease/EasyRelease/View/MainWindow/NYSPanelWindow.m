@@ -39,15 +39,13 @@
     }
     
     for (int i = 0; i < NConfig.replaceArray.count; i++) {
-        NSDictionary *replaceDict = NConfig.replaceArray[i];
-        if ([NYSUtils blankString:replaceDict[@"NewPrefix"]] && ![NYSUtils blankString:replaceDict[@"OldPrefix"]]) {
-            NSMutableDictionary *mutableReplaceDict = [NSMutableDictionary dictionaryWithDictionary:replaceDict];
-            NSString *newValue = [NSString stringWithFormat:@"%@_%@", capitalStr, replaceDict[@"OldPrefix"]];
-            if ([replaceDict[@"Type"] isEqual:@"global"]) {
+        NYSReplaceModel *replaceDict = NConfig.replaceArray[i];
+        if ([NYSUtils blankString:replaceDict.NewPrefix] && ![NYSUtils blankString:replaceDict.OldPrefix]) {
+            NSString *newValue = [NSString stringWithFormat:@"%@_%@", capitalStr, replaceDict.OldPrefix];
+            if ([replaceDict.Type isEqual:@"global"]) {
                 newValue = [NSString stringWithFormat:@"%@_", capitalStr];
             }
-            [mutableReplaceDict setValue:newValue forKey:@"NewPrefix"];
-            NConfig.replaceArray[i] = mutableReplaceDict;
+            replaceDict.NewPrefix = newValue;
         }
     }
     

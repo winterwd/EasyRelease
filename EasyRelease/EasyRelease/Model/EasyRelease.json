@@ -9,13 +9,13 @@
       "Type": "class",
       "OldPrefix": "NYS",
       "NewPrefix": "NYSC",
-      "Enable": "1"
+      "enable": true
     },
     {
       "Type": "method",
       "OldPrefix": "NYS",
       "NewPrefix": "NYSM",
-      "Enable": "0"
+      "enable": false
     }
   ],
   "projectFileDirUrl": "file:\/\/\/Users\/niyongsheng\/Desktop\/EasyRelease\/EasyRelease.xcodeproj",
@@ -23,7 +23,7 @@
   "ignoreArray": [
     {
       "name": "Pods",
-      "enable": "1"
+      "enable": true
     }
   ],
   "projectOldName": "EasyRelease",

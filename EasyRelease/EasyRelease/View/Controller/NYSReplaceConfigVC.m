@@ -7,6 +7,7 @@
 //
 
 #import "NYSReplaceConfigVC.h"
+#import "NSObject+YYModel.h"
 
 @interface NYSReplaceConfigVC ()
 <
@@ -63,11 +64,13 @@ NSTableViewDataSource
         return;
     }
     
-    NSDictionary *dic = @{@"OldPrefix": _prefixOldTextField.stringValue,
-                          @"NewPrefix": _prefixNewTextField.stringValue,
-                          @"Type": _typeBox.stringValue,
-                          @"Enable": @(true)};
-    [NConfig.replaceArray addObject:dic];
+    NYSReplaceModel *obj = [NYSReplaceModel new];
+    obj.OldPrefix = _prefixOldTextField.stringValue;
+    obj.NewPrefix = _prefixNewTextField.stringValue;
+    obj.Type = _typeBox.stringValue;
+    obj.enable = YES;
+    
+    [NConfig.replaceArray addObject:obj];
     [self.tableView reloadData];
     if (NConfig.replaceArray.count > 0) {
         [self.tableView editColumn:0 row:NConfig.replaceArray.count - 1 withEvent:nil select:YES];
@@ -96,7 +99,8 @@ NSTableViewDataSource
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    NSDictionary *rowInfoDic = NConfig.replaceArray[row];
+    NYSReplaceModel *obj = NConfig.replaceArray[row];
+    NSDictionary *rowInfoDic = [obj yy_modelToJSONObject];
     NSString *key = tableColumn.identifier;
     id value = rowInfoDic[key];
     
@@ -125,20 +129,14 @@ NSTableViewDataSource
 }
 
 - (void)checkButtonClick:(NSButton *)sender {
-    NSDictionary *rowInfoDic = NConfig.replaceArray[sender.tag];
-    NSMutableDictionary *mutableReplaceDict = [NSMutableDictionary dictionaryWithDictionary:rowInfoDic];
-    NSString *newValue = sender.state ? @"1" : @"0";
-    [mutableReplaceDict setValue:newValue forKey:@"Enable"];
-    NConfig.replaceArray[sender.tag] = mutableReplaceDict;
+    NYSReplaceModel *obj = NConfig.replaceArray[sender.tag];
+    obj.enable = sender.state == NSControlStateValueOn;
     [ArtProgressHUD showInfoText:@"updated"];
 }
 
 - (void)comboBoxChanged:(NSComboBox *)sender {
-    NSDictionary *rowInfoDic = NConfig.replaceArray[sender.tag];
-    NSMutableDictionary *mutableReplaceDict = [NSMutableDictionary dictionaryWithDictionary:rowInfoDic];
-    NSString *newValue = sender.stringValue;
-    [mutableReplaceDict setValue:newValue forKey:@"Type"];
-    NConfig.replaceArray[sender.tag] = mutableReplaceDict;
+    NYSReplaceModel *obj = NConfig.replaceArray[sender.tag];
+    obj.Type = sender.stringValue;
     [ArtProgressHUD showInfoText:@"updated"];
 }
 

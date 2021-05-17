@@ -9,6 +9,10 @@
 #import "NYSConfigModel.h"
 #import "YYModel.h"
 
+@implementation NYSReplaceModel
+@end
+@implementation NYSIgnoreModel
+@end
 @implementation NYSConfigModel
 - (NSUInteger)hash {
     return [self yy_modelHash];
@@ -41,4 +45,8 @@
     return YES;
 }
 
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    return @{@"replaceArray" : [NYSReplaceModel class],
+             @"ignoreArray" : NYSIgnoreModel.class };
+}
 @end
