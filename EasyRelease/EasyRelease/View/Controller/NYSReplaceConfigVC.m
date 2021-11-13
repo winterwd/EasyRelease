@@ -65,9 +65,9 @@ NSTableViewDataSource
     }
     
     NYSReplaceModel *obj = [NYSReplaceModel new];
-    obj.OldPrefix = _prefixOldTextField.stringValue;
-    obj.NewPrefix = _prefixNewTextField.stringValue;
-    obj.Type = _typeBox.stringValue;
+    obj.oldPrefix = _prefixOldTextField.stringValue;
+    obj.nowPrefix = _prefixNewTextField.stringValue;
+    obj.type = _typeBox.stringValue;
     obj.enable = YES;
     
     [NConfig.replaceArray addObject:obj];
@@ -136,7 +136,7 @@ NSTableViewDataSource
 
 - (void)comboBoxChanged:(NSComboBox *)sender {
     NYSReplaceModel *obj = NConfig.replaceArray[sender.tag];
-    obj.Type = sender.stringValue;
+    obj.type = sender.stringValue;
     [ArtProgressHUD showInfoText:@"updated"];
 }
 

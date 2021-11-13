@@ -10,15 +10,30 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef enum : NSUInteger {
+    ReplaceType_Global,
+    ReplaceType_Class,
+    ReplaceType_Method,
+} ReplaceType;
+
+typedef enum : NSUInteger {
+    IgnoreType_Directory,
+    IgnoreType_Class,
+    IgnoreType_File,
+} IgnoreType;
+
 @interface NYSReplaceModel : NSObject
-@property (nonatomic, copy) NSString *Type;
-@property (nonatomic, copy) NSString *OldPrefix;
-@property (nonatomic, copy) NSString *NewPrefix;
+@property (nonatomic, copy) NSString *type;
+@property (nonatomic, copy) NSString *oldPrefix;
+@property (nonatomic, copy) NSString *nowPrefix;
+@property (nonatomic, assign) ReplaceType type_e;
 @property (nonatomic) BOOL enable;
 @end
 
 @interface NYSIgnoreModel : NSObject
 @property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *type;
+@property (nonatomic, assign) IgnoreType type_e;
 @property (nonatomic) BOOL enable;
 @end
 

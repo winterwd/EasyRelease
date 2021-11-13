@@ -22,6 +22,7 @@ NSTableViewDataSource
 @property (weak) IBOutlet NSPathCell *pfdPathCell;
 
 @property (strong) IBOutlet NSTableView *tableView;
+@property (strong) IBOutlet NSTableView *ignoreFileTableView;
 
 @end
 
@@ -44,6 +45,12 @@ NSTableViewDataSource
     column.sortDescriptorPrototype = descriptor;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RefreshConfigUINotificationHandler:) name:RefreshConfNotice object:nil];
+    
+    
+    
+    self.ignoreFileTableView.delegate = self;
+    self.ignoreFileTableView.dataSource = self;
+    self.ignoreFileTableView.allowsMultipleSelection = NO;
 }
 
 - (instancetype)initWithFrame:(NSRect)frameRect {

@@ -10,8 +10,34 @@
 #import "YYModel.h"
 
 @implementation NYSReplaceModel
+- (void)setType:(NSString *)type
+{
+    _type = type;
+    if ([type isEqualToString:@"class"]) {
+        _type_e = ReplaceType_Class;
+    }
+    else if ([type isEqualToString:@"method"]) {
+        _type_e = ReplaceType_Method;
+    }
+    else if ([type isEqualToString:@"global"]) {
+        _type_e = ReplaceType_Global;
+    }
+}
 @end
 @implementation NYSIgnoreModel
+- (void)setType:(NSString *)type
+{
+    _type = type;
+    if ([type isEqualToString:@"directory"]) {
+        _type_e = IgnoreType_Directory;
+    }
+    else if ([type isEqualToString:@"file"]) {
+        _type_e = IgnoreType_File;
+    }
+    else if ([type isEqualToString:@"class"]) {
+        _type_e = IgnoreType_Class;
+    }
+}
 @end
 @implementation NYSConfigModel
 - (NSUInteger)hash {

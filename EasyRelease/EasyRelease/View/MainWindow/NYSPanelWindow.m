@@ -40,12 +40,12 @@
     
     for (int i = 0; i < NConfig.replaceArray.count; i++) {
         NYSReplaceModel *replaceDict = NConfig.replaceArray[i];
-        if ([NYSUtils blankString:replaceDict.NewPrefix] && ![NYSUtils blankString:replaceDict.OldPrefix]) {
-            NSString *newValue = [NSString stringWithFormat:@"%@_%@", capitalStr, replaceDict.OldPrefix];
-            if ([replaceDict.Type isEqual:@"global"]) {
+        if ([NYSUtils blankString:replaceDict.nowPrefix] && ![NYSUtils blankString:replaceDict.oldPrefix]) {
+            NSString *newValue = [NSString stringWithFormat:@"%@_%@", capitalStr, replaceDict.oldPrefix];
+            if (replaceDict.type_e == ReplaceType_Global) {
                 newValue = [NSString stringWithFormat:@"%@_", capitalStr];
             }
-            replaceDict.NewPrefix = newValue;
+            replaceDict.nowPrefix = newValue;
         }
     }
     

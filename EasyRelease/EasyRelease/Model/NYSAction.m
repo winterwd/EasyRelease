@@ -99,9 +99,11 @@ static void easyReleaseDono() {
         
         NPostNotification(@"Replace prefix substitution...");
         for (NYSReplaceModel *item in NConfig.replaceArray) {
-            if ([item.Type isEqualToString:@"global"] && item.enable) {
-                NSString *oldMethodNamePrefix = item.OldPrefix;
-                NSString *newMethodNamePrefix = item.NewPrefix;
+            if (!item.enable) continue;
+            if (item.type_e != ReplaceType_Global) continue;
+            {
+                NSString *oldMethodNamePrefix = item.oldPrefix;
+                NSString *newMethodNamePrefix = item.nowPrefix;
                 if ([NYSUtils blankString:oldMethodNamePrefix] || [NYSUtils blankString:newMethodNamePrefix]) {
                     NPostNotification(@"Modifying the method name prefix, Parameters are missing! \n");
                 }
@@ -120,9 +122,11 @@ static void easyReleaseDono() {
         }
         
         for (NYSReplaceModel *item in NConfig.replaceArray) {
-            if ([item.Type isEqualToString:@"method"] && item.enable) {
-                NSString *oldMethodNamePrefix = item.OldPrefix;
-                NSString *newMethodNamePrefix = item.NewPrefix;
+            if (!item.enable) continue;
+            if (item.type_e != ReplaceType_Method) continue;
+            {
+                NSString *oldMethodNamePrefix = item.oldPrefix;
+                NSString *newMethodNamePrefix = item.nowPrefix;
                 if ([NYSUtils blankString:oldMethodNamePrefix] || [NYSUtils blankString:newMethodNamePrefix]) {
                     NPostNotification(@"Modifying the method name prefix, Parameters are missing! \n");
                 }
@@ -142,9 +146,11 @@ static void easyReleaseDono() {
         }
         
         for (NYSReplaceModel *item in NConfig.replaceArray) {
-            if ([item.Type isEqualToString:@"method"] && item.enable) {
-                NSString *oldMethodNamePrefix = item.OldPrefix;
-                NSString *newMethodNamePrefix = item.NewPrefix;
+            if (!item.enable) continue;
+            if (item.type_e != ReplaceType_Method) continue;
+            {
+                NSString *oldMethodNamePrefix = item.oldPrefix;
+                NSString *newMethodNamePrefix = item.nowPrefix;
                 if ([NYSUtils blankString:oldMethodNamePrefix] || [NYSUtils blankString:newMethodNamePrefix]) {
                     NPostNotification(@"Modifying the method name prefix, Parameters are missing! \n");
                 }
@@ -164,9 +170,11 @@ static void easyReleaseDono() {
         }
         
         for (NYSReplaceModel *item in NConfig.replaceArray) {
-            if ([item.Type isEqualToString:@"class"] && item.enable) {
-                NSString *oldClassNamePrefix = item.OldPrefix;
-                NSString *newClassNamePrefix = item.NewPrefix;
+            if (!item.enable) continue;
+            if (item.type_e != ReplaceType_Class) continue;
+            {
+                NSString *oldClassNamePrefix = item.oldPrefix;
+                NSString *newClassNamePrefix = item.nowPrefix;
                 if ([NYSUtils blankString:oldClassNamePrefix] || [NYSUtils blankString:newClassNamePrefix]) {
                     NPostNotification(@"Replacing the class name prefix, Parameters are missing! \n");
                 }
@@ -639,7 +647,7 @@ void modifyClassNamePrefix(NSMutableString *projectContent, NSString *sourceCode
 }
 
 #pragma mark - 替换方法名前缀
-void modifyMethodsPrefix(NSString *sourceCodeDir, NSArray<NSString *> *ignoreDirNames,NSString *oldName, NSString *newName, bool isGlobal, NSStringCompareOptions options){
+void modifyMethodsPrefix(NSString *sourceCodeDir, NSArray<NSString *> *ignoreDirNames, NSString *oldName, NSString *newName, bool isGlobal, NSStringCompareOptions options){
     NSFileManager *fm = [NSFileManager defaultManager];
     
     // 遍历源代码文件 h 与 m 配对

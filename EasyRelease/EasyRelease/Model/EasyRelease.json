@@ -6,15 +6,15 @@
   "isDelAnnotation": true,
   "replaceArray": [
     {
-      "Type": "class",
-      "OldPrefix": "NYS",
-      "NewPrefix": "NYSC",
+      "type": "class",
+      "oldPrefix": "NYS",
+      "nowPrefix": "NYSC",
       "enable": true
     },
     {
-      "Type": "method",
-      "OldPrefix": "NYS",
-      "NewPrefix": "NYSM",
+      "type": "method",
+      "oldPrefix": "NYS",
+      "nowPrefix": "NYSM",
       "enable": false
     }
   ],
@@ -23,7 +23,18 @@
   "ignoreArray": [
     {
       "name": "Pods",
+      "type": "directory",
       "enable": true
+    },
+    {
+        "name": "TestVC",
+        "type": "class",
+        "enable": true
+    },
+    {
+        "name": "name.json",
+        "type": "file",
+        "enable": true
     }
   ],
   "projectOldName": "EasyRelease",
