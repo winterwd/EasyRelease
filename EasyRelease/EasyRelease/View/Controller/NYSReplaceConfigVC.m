@@ -100,26 +100,24 @@ NSTableViewDataSource
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     NYSReplaceModel *obj = NConfig.replaceArray[row];
-    NSDictionary *rowInfoDic = [obj yy_modelToJSONObject];
+
     NSString *key = tableColumn.identifier;
-    id value = rowInfoDic[key];
-    
-    NSView *contentView = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
+    NSView *contentView = [tableView makeViewWithIdentifier:key owner:self];
     if ([key isEqualToString:@"NewPrefix"]) {
         NSTextField *textField = [contentView subviews][0];
-        textField.stringValue = (NSString *)value;
+        textField.stringValue = obj.nowPrefix;
     } else if ([key isEqualToString:@"OldPrefix"]) {
         NSTextField *textField = [contentView subviews][0];
-        textField.stringValue = (NSString *)value;
+        textField.stringValue = obj.oldPrefix;
     } else if ([key isEqualToString:@"Type"]) {
         NSComboBox *comboBox = [contentView subviews][0];
-        comboBox.stringValue = (NSString *)value;
+        comboBox.stringValue = obj.type;
         
         [comboBox setTag:row];
         [comboBox setAction:@selector(comboBoxChanged:)];
     } else {
         NSButton *checkBoxButton = [contentView subviews][0];
-        [checkBoxButton setState:[(NSString *)value integerValue]];
+        [checkBoxButton setState:obj.enable];
         
         [checkBoxButton setTag:row];
         [checkBoxButton setAction:@selector(checkButtonClick:)];
